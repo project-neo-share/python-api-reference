@@ -3,7 +3,6 @@ langchain-community
 python-dotenv
 streamlit
 PyPDF2
-python-docx
-transformers
 huggingface_hub
-git+https://github.com/AI-Yash/st-chat.git
+transformers
+streamlit-chat @ git+https://github.com/AI-Yash/st-chat.git

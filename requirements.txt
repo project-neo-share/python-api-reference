@@ -6,6 +6,6 @@ PyPDF2
 python-docx
 sentence-transformers
 transformers
-torch==2.1.0+cpu
+torch
 huggingface_hub
 git+https://github.com/AI-Yash/st-chat.git

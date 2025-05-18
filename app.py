@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import streamlit as st
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceHubEmbeddings
+from langchain.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain import HuggingFaceHub
 from langchain.chains import ConversationalRetrievalChain
@@ -74,11 +74,8 @@ def get_text_chunks(text):
 
 
 def get_vectorstore(chunks):
-    embeddings = HuggingFaceHubEmbeddings(
-        repo_id="sentence-transformers/all-MiniLM-L6-v2"
-    )
+    embeddings = OpenAIEmbeddings()
     return FAISS.from_texts(chunks, embeddings)
-
 
 def get_conversation_chain(vectorstore):
     llm = HuggingFaceHub(

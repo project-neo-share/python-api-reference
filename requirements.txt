@@ -1,11 +1,20 @@
-langchain
-langchain-community
+# core
+langchain==0.1.14
+langchain-community==0.0.21
 python-dotenv
 streamlit
+
+# file handling
 PyPDF2
 python-docx
+
+# embeddings & LLMs
 sentence-transformers
 transformers
 torch
-streamlit-chat
+
+# huggingface hub
 huggingface_hub
+
+# chat UI (GitHub에서 설치)
+git+https://github.com/AI-Yash/st-chat.git

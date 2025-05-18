@@ -36,7 +36,7 @@ def main():
         process = st.button("파이썬 API 레퍼런스 불러오기")
 
     if process:
-        files_text = get_files_text(uploaded_files)
+        files_text = get_files_text(file_paths)
         # get text chunks
         text_chunks = get_text_chunks(files_text)
         # create vetore stores

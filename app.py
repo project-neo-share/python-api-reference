@@ -10,7 +10,7 @@ import os
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain_core.callbacks import StdOutCallbackHandler
-from streamlit_chat import message
+from st_chat import message
 
 
 def main():

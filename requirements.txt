@@ -1,18 +1,11 @@
-# core
-langchain
-langchain-community
+langchain==0.1.14
+langchain-community==0.0.21
 python-dotenv
 streamlit
-
-# file handling
 PyPDF2
 python-docx
-
-# embeddings & LLMs
 sentence-transformers
 transformers
-torch
-
-# huggingface hub
+torch==2.1.0+cpu
 huggingface_hub
-
+git+https://github.com/AI-Yash/st-chat.git

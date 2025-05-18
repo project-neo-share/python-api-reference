@@ -6,4 +6,4 @@ PyPDF2
 python-docx
 transformers
 huggingface_hub
-streamlit-chat @ git+https://github.com/AI-Yash/st-chat.git
+git+https://github.com/AI-Yash/st-chat.git

@@ -43,7 +43,7 @@ def main():
     st.info("💬 챗봇 체인 구성 중입니다...")
     st.session_state.conversation = get_conversation_chain(vetorestore)
     
-    st.success("✅ 준비 완료!")
+    st.success("준비 완료!")
     st.session_state.processComplete = True
 
     if  st.session_state.processComplete == True:

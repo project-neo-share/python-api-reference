@@ -2,14 +2,13 @@ from dotenv import load_dotenv
 import streamlit as st
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_community.embeddings import HuggingFaceHubEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain import HuggingFaceHub
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain_core.callbacks import StdOutCallbackHandler
 import os
-
 
 def main():
     load_dotenv()
@@ -23,7 +22,6 @@ def main():
     if "processComplete" not in st.session_state:
         st.session_state.processComplete = False
 
-    # 고정된 PDF 파일만 사용
     file_paths = [
         "assets/Programming-Fundamentals-1570222270.pdf",
         "assets/1분파이썬_강의자료_전체.pdf"
@@ -35,7 +33,7 @@ def main():
     st.info("✂️ 텍스트 분할 중...")
     text_chunks = get_text_chunks(files_text)
 
-    st.info("🔎 벡터 임베딩 중...")
+    st.info("🔎 HuggingFaceHub API로 임베딩 중...")
     vectorstore = get_vectorstore(text_chunks)
 
     st.info("🤖 챗봇 체인 구성 중...")
@@ -44,15 +42,13 @@ def main():
     st.success("✅ 준비 완료! 질문을 입력하세요.")
     st.session_state.processComplete = True
 
-    # 사용자 질문 입력창
     if st.session_state.processComplete:
-        user_question = st.chat_input("파이썬 API 레퍼런스에 대해 무엇이든 물어보세요.")
+        user_question = st.chat_input("파이썬 API 레퍼런스에 대해 질문해 보세요.")
         if user_question:
             handle_user_input(user_question)
 
 
 def get_pdf_files_text(file_paths):
-    """여러 PDF에서 텍스트 추출"""
     text = ""
     for pdf in file_paths:
         reader = PdfReader(pdf)
@@ -74,8 +70,11 @@ def get_text_chunks(text):
 
 
 def get_vectorstore(chunks):
-    embeddings = OpenAIEmbeddings()
+    embeddings = HuggingFaceHubEmbeddings(
+        repo_id="sentence-transformers/all-MiniLM-L6-v2"
+    )
     return FAISS.from_texts(chunks, embeddings)
+
 
 def get_conversation_chain(vectorstore):
     llm = HuggingFaceHub(

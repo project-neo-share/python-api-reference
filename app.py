@@ -29,7 +29,6 @@ def main():
     # 고정된 PDF 파일 경로 리스트
     file_paths = [
         "assets/Programming-Fundamentals-1570222270.pdf",
-        "assets/01_교재디자인 내지.pdf",
         "assets/1분파이썬_강의자료_전체.pdf"
     ]
     with st.sidebar:

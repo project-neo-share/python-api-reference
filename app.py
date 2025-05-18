@@ -1,15 +1,22 @@
 import streamlit as st
 import google.generativeai as genai
-import os
 
-# 환경변수에서 API 키 가져오기
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-genai.configure(api_key=GOOGLE_API_KEY)
+# 🔐 사이드바에서 API 키 입력 받기
+st.sidebar.title("🔐 Gemini API 키 설정")
+api_key_input = st.sidebar.text_input("GOOGLE_API_KEY를 입력하세요", type="password")
 
-# Gemini 모델 설정
-model = genai.GenerativeModel("gemini-pro")
+if api_key_input:
+    try:
+        genai.configure(api_key=api_key_input)
+        model = genai.GenerativeModel("gemini-pro")
+    except Exception as e:
+        st.sidebar.error(f"API 설정 실패: {e}")
+        st.stop()
+else:
+    st.warning("API 키를 먼저 입력하세요.")
+    st.stop()
 
-# Streamlit UI
+# 🌐 메인 UI
 st.set_page_config(page_title="🐍 Gemini 기반 파이썬 코드 챗봇")
 st.title("💬 Gemini 프로그래밍 조교")
 
@@ -18,12 +25,12 @@ if "chat_history" not in st.session_state:
 
 user_input = st.chat_input("파이썬 코드 관련 질문을 입력하세요!")
 
-# 이전 대화 출력
+# 🔁 이전 대화 출력
 for role, content in st.session_state.chat_history:
     with st.chat_message(role):
         st.markdown(content)
 
-# 사용자 입력 처리
+# 🤖 질문 처리
 if user_input:
     st.chat_message("user").markdown(user_input)
     st.session_state.chat_history.append(("user", user_input))

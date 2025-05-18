@@ -1,7 +1,10 @@
+langchain
+langchain-community
 python-dotenv
 streamlit
 PyPDF2
 python-docx
-langchain
-streamlit_chat
 sentence-transformers
+transformers
+torch
+streamlit-chat

@@ -16,8 +16,8 @@ from streamlit_chat import message
 
 def main():
     load_dotenv()
-    st.set_page_config(page_title="Ask your PDF")
-    st.header("2025 TU Korea 파이썬프로그래밍 API 레퍼런스 챗봇")
+    st.set_page_config(page_title="2025-1학기 파이썬프로그래밍(한국공대)")
+    st.header("파이썬 API 레퍼런스 챗봇")
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = None

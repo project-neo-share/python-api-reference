@@ -5,4 +5,3 @@ streamlit
 PyPDF2
 huggingface_hub
 transformers
-streamlit-chat @ git+https://github.com/AI-Yash/st-chat.git

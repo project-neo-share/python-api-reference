@@ -39,11 +39,8 @@ def main():
     # 파일을 open + PyPDF2 래핑해서 유사하게 만들기
     for path in file_paths:
         try:
-            reader = PdfReader(path)
             uploaded_files.append({
-                "name": path.split("/")[-1],
-                "reader": reader,
-                "text": "\n".join([p.extract_text() or "" for p in reader.pages])
+                "name": path.split("/")[-1]
             })
         except Exception as e:
             st.error(f"{path} 읽기 오류: {e}")

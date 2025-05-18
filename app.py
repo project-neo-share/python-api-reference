@@ -8,7 +8,6 @@ from langchain import HuggingFaceHub
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain_core.callbacks import StdOutCallbackHandler
-from st_chat import message
 import os
 
 
@@ -100,8 +99,9 @@ def handle_user_input(question):
     st.session_state.chat_history = response['chat_history']
 
     for i, msg in enumerate(st.session_state.chat_history):
-        is_user = (i % 2 == 0)
-        message(msg.content, is_user=is_user, key=str(i))
+        role = "user" if i % 2 == 0 else "assistant"
+        with st.chat_message(role):
+            st.markdown(msg.content)
 
 
 if __name__ == "__main__":

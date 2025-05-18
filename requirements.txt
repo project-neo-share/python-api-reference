@@ -1,14 +1,6 @@
-dotenv
+python-dotenv
 streamlit
 PyPDF2
-langchain.text_splitter
-langchain.embeddings.huggingface
-langchain.vectorstores
-langchain.chains.question_answering
+python-docx
 langchain
-docx
-os
-langchain.chains
-langchain.memory
-langchain_core.callbacks
 streamlit_chat

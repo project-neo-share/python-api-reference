@@ -32,19 +32,6 @@ def main():
         "assets/01_교재디자인_내지.pdf"
         "assets/1분파이썬_강의자료_전체.pdf"
     ]
-    
-    # uploaded_files와 유사한 구조로 처리
-    uploaded_files = []
-    
-    # 파일을 open + PyPDF2 래핑해서 유사하게 만들기
-    for path in file_paths:
-        try:
-            uploaded_files.append({
-                "name": path.split("/")[-1]
-            })
-        except Exception as e:
-            st.error(f"{path} 읽기 오류: {e}")
-            
     with st.sidebar:
         process = st.button("파이썬 API 레퍼런스 불러오기")
 
@@ -65,14 +52,13 @@ def main():
         if user_question:
             handel_userinput(user_question)
 
-def get_files_text(uploaded_files):
+def get_files_text(file_paths):
     text = ""
-    for uploaded_file in uploaded_files:
-        split_tup = os.path.splitext(uploaded_file.name)
-        file_extension = split_tup[1]
-        if file_extension == ".pdf":
+    for uploaded_file in file_paths:
+        _, ext = os.path.splitext(uploaded_file)
+        if ext == ".pdf":
             text += get_pdf_text(uploaded_file)
-        elif file_extension == ".docx":
+        elif ext == ".docx":
             text += get_docx_text(uploaded_file)
         else:
             text += get_csv_text(uploaded_file)

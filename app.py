@@ -1,48 +1,36 @@
 import streamlit as st
-from huggingface_hub import InferenceClient
+import google.generativeai as genai
 import os
 
-# 토큰 불러오기 (필수)
-HF_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+# 환경변수에서 API 키 가져오기
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+genai.configure(api_key=GOOGLE_API_KEY)
 
-# Hugging Face Inference API 클라이언트
-client = InferenceClient(
-    model="mistralai/Mistral-7B-Instruct-v0.1",
-    token=os.getenv("HUGGINGFACEHUB_API_TOKEN")
-)
-st.set_page_config(page_title="🐍 파이썬 코드 질문 챗봇", layout="wide")
-st.title("💬 파이썬 프로그래밍 도우미")
+# Gemini 모델 설정
+model = genai.GenerativeModel("gemini-pro")
+
+# Streamlit UI
+st.set_page_config(page_title="🐍 Gemini 기반 파이썬 코드 챗봇")
+st.title("💬 Gemini 프로그래밍 조교")
 
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# 사용자 입력
-user_prompt = st.chat_input("파이썬에 대해 궁금한 걸 물어보세요!")
+user_input = st.chat_input("파이썬 코드 관련 질문을 입력하세요!")
 
-# 대화 출력
+# 이전 대화 출력
 for role, content in st.session_state.chat_history:
     with st.chat_message(role):
         st.markdown(content)
 
-# 응답 처리
-if user_prompt:
-    st.session_state.chat_history.append(("user", user_prompt))
-    with st.chat_message("user"):
-        st.markdown(user_prompt)
+# 사용자 입력 처리
+if user_input:
+    st.chat_message("user").markdown(user_input)
+    st.session_state.chat_history.append(("user", user_input))
 
-    # 시스템 메시지 (명시적 role prompt 삽입)
-    full_prompt = (
-        "You are a helpful assistant who explains and writes Python code.\n\n"
-        f"User: {user_prompt}\nAssistant:"
-    )
-
+    prompt = f"너는 파이썬 전문가야. 다음 질문에 대해 설명과 예제 코드를 제공해줘:\n{user_input}"
     with st.chat_message("assistant"):
-        with st.spinner("🧠 Mistral 모델이 답변 중입니다..."):
-            response = client.text_generation(
-                prompt=full_prompt,
-                max_new_tokens=512,
-                temperature=0.7,
-                top_p=0.95
-            )
-            st.markdown(response.strip())
-            st.session_state.chat_history.append(("assistant", response.strip()))
+        with st.spinner("Gemini가 답변 중입니다..."):
+            response = model.generate_content(prompt)
+            st.markdown(response.text)
+            st.session_state.chat_history.append(("assistant", response.text))

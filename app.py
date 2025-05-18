@@ -31,24 +31,20 @@ def main():
         "assets/Programming-Fundamentals-1570222270.pdf",
         "assets/1분파이썬_강의자료_전체.pdf"
     ]
-    with st.sidebar:
-        process = st.button("파이썬 API 레퍼런스 불러오기")
-
-    if process:
-        st.info("📄 텍스트 추출 중입니다...")
-        files_text = get_files_text(file_paths)
+    st.info("📄 텍스트 추출 중입니다...")
+    files_text = get_files_text(file_paths)
     
-        st.info("📚 텍스트 분할 중입니다...")
-        text_chunks = get_text_chunks(files_text)
+    st.info("📚 텍스트 분할 중입니다...")
+    text_chunks = get_text_chunks(files_text)
     
-        st.info("🧠 임베딩 및 벡터스토어 생성 중입니다...")
-        vetorestore = get_vectorstore(text_chunks)
+    st.info("🧠 임베딩 및 벡터스토어 생성 중입니다...")
+    vetorestore = get_vectorstore(text_chunks)
     
-        st.info("💬 챗봇 체인 구성 중입니다...")
-        st.session_state.conversation = get_conversation_chain(vetorestore)
+    st.info("💬 챗봇 체인 구성 중입니다...")
+    st.session_state.conversation = get_conversation_chain(vetorestore)
     
-        st.success("✅ 준비 완료!")
-        st.session_state.processComplete = True
+    st.success("✅ 준비 완료!")
+    st.session_state.processComplete = True
 
     if  st.session_state.processComplete == True:
         user_question = st.chat_input("파이썬 API 레퍼런스: 질문해 보세요.")

@@ -26,11 +26,32 @@ def main():
     if "processComplete" not in st.session_state:
         st.session_state.processComplete = None
 
+    # 고정된 PDF 파일 경로 리스트
+    file_paths = [
+        "assets/Programming-Fundamentals-1570222270.pdf",
+        "assets/01_교재디자인_내지.pdf"
+    ]
+    
+    # uploaded_files와 유사한 구조로 처리
+    uploaded_files = []
+    
+    # 파일을 open + PyPDF2 래핑해서 유사하게 만들기
+    for path in file_paths:
+        try:
+            reader = PdfReader(path)
+            uploaded_files.append({
+                "name": path.split("/")[-1],
+                "reader": reader,
+                "text": "\n".join([p.extract_text() or "" for p in reader.pages])
+            })
+        except Exception as e:
+            st.error(f"{path} 읽기 오류: {e}")
+            
     with st.sidebar:
-        uploaded_files =  st.file_uploader("Upload your file",type=['pdf','docx'],accept_multiple_files=True)
-        process = st.button("Process")
+        #uploaded_files =  st.file_uploader("Upload your file",type=['pdf','docx'],accept_multiple_files=True)
+        process = st.button("파이썬 API 레퍼런스 불러오기")
 
-    # pdf = st.file_uploader("Upload your pdf",type="pdf")
+    #pdf = st.file_uploader("Upload your pdf",type="pdf")
 
     if process:
         files_text = get_files_text(uploaded_files)
@@ -45,7 +66,7 @@ def main():
         st.session_state.processComplete = True
 
     if  st.session_state.processComplete == True:
-        user_question = st.chat_input("Ask Question about your files.")
+        user_question = st.chat_input("파이썬 프로그래밍 API 레퍼런스: 질문해 보세요.")
         if user_question:
             handel_userinput(user_question)
 

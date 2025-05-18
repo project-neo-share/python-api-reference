@@ -1,10 +1,9 @@
-langchain
-langchain-community
+langchain==0.1.14
+langchain-community==0.0.21
 python-dotenv
 streamlit
 PyPDF2
 python-docx
-sentence-transformers
 transformers
 huggingface_hub
-git+https://github.com/AI-Yash/st-chat.git
+streamlit-chat @ git+https://github.com/AI-Yash/st-chat.git

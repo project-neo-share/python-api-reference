@@ -1,5 +1,2 @@
 streamlit
-langchain
-langchain-community
-python-dotenv
 huggingface_hub

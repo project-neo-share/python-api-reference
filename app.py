@@ -36,15 +36,19 @@ def main():
         process = st.button("파이썬 API 레퍼런스 불러오기")
 
     if process:
+        st.info("📄 텍스트 추출 중입니다...")
         files_text = get_files_text(file_paths)
-        # get text chunks
+    
+        st.info("📚 텍스트 분할 중입니다...")
         text_chunks = get_text_chunks(files_text)
-        # create vetore stores
+    
+        st.info("🧠 임베딩 및 벡터스토어 생성 중입니다...")
         vetorestore = get_vectorstore(text_chunks)
-         # create conversation chain
-        st.session_state.conversation = get_conversation_chain(vetorestore) #for openAI
-        # st.session_state.conversation = get_conversation_chain(vetorestore) #for huggingface
-
+    
+        st.info("💬 챗봇 체인 구성 중입니다...")
+        st.session_state.conversation = get_conversation_chain(vetorestore)
+    
+        st.success("✅ 준비 완료!")
         st.session_state.processComplete = True
 
     if  st.session_state.processComplete == True:
@@ -100,7 +104,7 @@ def get_vectorstore(text_chunks):
 
 def get_conversation_chain(vetorestore):
     handler = StdOutCallbackHandler()
-    llm = HuggingFaceHub(repo_id="google/flan-t5-large", model_kwargs={"temperature":5,"max_length":64})
+    llm = HuggingFaceHub(repo_id="google/flan-t5-large", model_kwargs={"temperature":0.7,"max_length":256})
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(
         llm=llm,

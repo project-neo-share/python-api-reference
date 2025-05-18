@@ -48,7 +48,7 @@ def main():
         st.session_state.processComplete = True
 
     if  st.session_state.processComplete == True:
-        user_question = st.chat_input("파이썬 프로그래밍 API 레퍼런스: 질문해 보세요.")
+        user_question = st.chat_input("파이썬 API 레퍼런스: 질문해 보세요.")
         if user_question:
             handel_userinput(user_question)
 
@@ -83,7 +83,6 @@ def get_csv_text(file):
     return "a"
 
 def get_text_chunks(text):
-    # spilit ito chuncks
     text_splitter = CharacterTextSplitter(
         separator="\n",
         chunk_size=900,

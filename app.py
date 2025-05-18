@@ -22,17 +22,20 @@ def main():
 
 def get_conversation_chain():
     llm = HuggingFaceHub(
-        repo_id="mistralai/Mistral-7B-Instruct-v0.1",  # Chat 구조 지원
+        repo_id="mistralai/Mistral-7B-Instruct-v0.1",
         model_kwargs={"temperature": 0.7, "max_new_tokens": 512}
     )
-    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-    conversation_chain = ConversationChain(
+    memory = ConversationBufferMemory(
+        memory_key="history", 
+        return_messages=True
+    )
+    return ConversationChain(
         llm=llm,
         memory=memory,
         verbose=True,
         callbacks=[StdOutCallbackHandler()]
     )
-    return conversation_chain
+
 
 def handle_user_input(question):
     response = st.session_state.conversation.run(question)

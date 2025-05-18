@@ -1,7 +1,10 @@
 import streamlit as st
 import google.generativeai as genai
 
-# 🔐 사이드바에서 API 키 입력 받기
+# ✅ 가장 먼저 실행되어야 함
+st.set_page_config(page_title="🐍 Gemini 기반 파이썬 코드 챗봇")
+
+# 🔐 사이드바에서 API 키 입력
 st.sidebar.title("🔐 Gemini API 키 설정")
 api_key_input = st.sidebar.text_input("GOOGLE_API_KEY를 입력하세요", type="password")
 
@@ -15,9 +18,8 @@ if api_key_input:
 else:
     st.warning("API 키를 먼저 입력하세요.")
     st.stop()
-
+    
 # 🌐 메인 UI
-st.set_page_config(page_title="🐍 Gemini 기반 파이썬 코드 챗봇")
 st.title("💬 Gemini 프로그래밍 조교")
 
 if "chat_history" not in st.session_state:

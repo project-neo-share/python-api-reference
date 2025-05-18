@@ -7,10 +7,9 @@ HF_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
 # Hugging Face Inference API 클라이언트
 client = InferenceClient(
-    model="mistralai/Mistral-7B-Instruct-v0.1",
-    token=HF_TOKEN
+    model="tiiuae/falcon-rw-1b",
+    token=os.getenv("HUGGINGFACEHUB_API_TOKEN")
 )
-
 st.set_page_config(page_title="🐍 파이썬 코드 질문 챗봇", layout="wide")
 st.title("💬 파이썬 프로그래밍 도우미 (Hugging Face 무료 API)")
 

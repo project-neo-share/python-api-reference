@@ -1,7 +1,5 @@
+streamlit
 langchain
 langchain-community
 python-dotenv
-streamlit
-PyPDF2
 huggingface_hub
-transformers

@@ -17,7 +17,7 @@ from streamlit_chat import message
 def main():
     load_dotenv()
     st.set_page_config(page_title="Ask your PDF")
-    st.header("Ask Your PDF")
+    st.header("2025 TU Korea 파이썬프로그래밍 API 레퍼런스 챗봇")
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
@@ -30,6 +30,7 @@ def main():
     file_paths = [
         "assets/Programming-Fundamentals-1570222270.pdf",
         "assets/01_교재디자인_내지.pdf"
+        "assets/1분파이썬_강의자료_전체.pdf"
     ]
     
     # uploaded_files와 유사한 구조로 처리
@@ -48,10 +49,7 @@ def main():
             st.error(f"{path} 읽기 오류: {e}")
             
     with st.sidebar:
-        #uploaded_files =  st.file_uploader("Upload your file",type=['pdf','docx'],accept_multiple_files=True)
         process = st.button("파이썬 API 레퍼런스 불러오기")
-
-    #pdf = st.file_uploader("Upload your pdf",type="pdf")
 
     if process:
         files_text = get_files_text(uploaded_files)
